@@ -29,7 +29,7 @@ public class ConnectExample {
         Channel channel = CHANNEL_FROM_SOMEWHERE; //reference form somewhere
         // Does not block
         ChannelFuture future = channel.connect(
-                new InetSocketAddress("192.168.0.1", 25));
+                new InetSocketAddress("127.0.0.1", 1234));
         future.addListener(new ChannelFutureListener() {
             @Override
             public void operationComplete(ChannelFuture future) {
@@ -46,5 +46,9 @@ public class ConnectExample {
             }
         });
 
+    }
+
+    public static void main(String[] args) {
+        connect();
     }
 }
