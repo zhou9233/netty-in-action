@@ -43,6 +43,8 @@ public class NettyNioServer {
                                       }
                                   }
                     );
+            //绑定Channel并返回一个ChannelFuture,其将会在绑定操作完成后接收到通知，在那之后必须调用
+            //Channel.connect()方法来建立通知
             ChannelFuture f = b.bind().sync();
             f.channel().closeFuture().sync();
         } finally {

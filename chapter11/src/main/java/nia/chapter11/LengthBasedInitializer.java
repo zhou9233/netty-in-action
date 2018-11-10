@@ -14,6 +14,7 @@ public class LengthBasedInitializer extends ChannelInitializer<Channel> {
     protected void initChannel(Channel ch) throws Exception {
         ChannelPipeline pipeline = ch.pipeline();
         pipeline.addLast(
+                //使用LengthFieldBasedFrameDecoder编码将帧长度编码到帧起始的前八个字节
                 new LengthFieldBasedFrameDecoder(64 * 1024, 0, 8));
         pipeline.addLast(new FrameHandler());
     }

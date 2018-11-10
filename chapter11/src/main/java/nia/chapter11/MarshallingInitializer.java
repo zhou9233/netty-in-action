@@ -27,8 +27,11 @@ public class MarshallingInitializer extends ChannelInitializer<Channel> {
     @Override
     protected void initChannel(Channel channel) throws Exception {
         ChannelPipeline pipeline = channel.pipeline();
+        //加 MarshallingDecoder 以将 ByteBuf 转换为 POJO
         pipeline.addLast(new MarshallingDecoder(unmarshallerProvider));
+        //添加 MarshallingEncoder 以将 POJO转换为 ByteBuf
         pipeline.addLast(new MarshallingEncoder(marshallerProvider));
+        //添加 ObjectHandler，以处理普通的实现了Serializable 接口的 POJO
         pipeline.addLast(new ObjectHandler());
     }
 

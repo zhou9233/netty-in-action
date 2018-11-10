@@ -28,6 +28,8 @@ public class HttpAggregatorInitializer extends ChannelInitializer<Channel> {
             pipeline.addLast("codec", new HttpServerCodec());
         }
         pipeline.addLast("aggregator",
+                //将最大的消息大小为512KB的HttpObjectAggregator
+                //添加到ChannelPipeline
                 new HttpObjectAggregator(512 * 1024));
     }
 }

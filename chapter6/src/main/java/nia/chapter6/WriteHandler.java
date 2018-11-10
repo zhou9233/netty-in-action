@@ -13,9 +13,9 @@ public class WriteHandler extends ChannelHandlerAdapter {
     private ChannelHandlerContext ctx;
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) {
-        this.ctx = ctx;
+        this.ctx = ctx;//存储 ChannelHandlerContext的引用以供稍后使用
     }
     public void send(String msg) {
-        ctx.writeAndFlush(msg);
+        ctx.writeAndFlush(msg);//使用之前的ChannelHandlerContext引用来发送消息
     }
 }

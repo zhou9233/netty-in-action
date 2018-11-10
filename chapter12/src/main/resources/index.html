@@ -16,13 +16,36 @@
             height: 15em;
         }
     </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>-->
+    <!--<script src="jquery.js"  type="text/javascript"></script>-->
     <script type="text/javascript">
-        function log(msg) {
-            var log = $('#log')
-            log.append(msg + " \n").scrollTop(log[0].scrollHeight - log.height());
+        var ws;
+        window.onload = function () {
+            var webSoketUrl = ((location.protocol.indexOf('https') == -1 ? 'ws://' : 'wss://') + location.host + '/ws');
+            ws = null;
+            if(ws == null|| ws.readyState != 1) {
+                ws = new WebSocket(webSoketUrl);
+                ws.onerror = function (e) {
+                    console.log('Error : ' + e.message)
+                }
+
+                ws.onopen = function () {
+                    console.log('connected')
+                }
+
+                ws.onclose = function () {
+                    console.log('disconnected')
+                }
+
+                ws.onmessage = function (d) {
+                    console.log('Response : ' + d.data)
+                }
+            }
         }
-        $(function () {
+
+
+
+        /*$(function () {
             $('#url').val((location.protocol.indexOf('https') == -1 ? 'ws://' : 'wss://') + location.host + '/ws')
 
             if (!WebSocket) {
@@ -65,7 +88,7 @@
                     }
                 })
             }
-        })
+        });*/
     </script>
 </head>
 

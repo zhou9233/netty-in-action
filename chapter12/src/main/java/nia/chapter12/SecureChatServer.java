@@ -28,11 +28,12 @@ public class SecureChatServer extends ChatServer {
     }
 
     public static void main(String[] args) throws Exception {
-        if (args.length != 1) {
+        /*if (args.length != 1) {
             System.err.println("Please give port as argument");
             System.exit(1);
         }
-        int port = Integer.parseInt(args[0]);
+        int port = Integer.parseInt(args[0]);*/
+        int port = 9999;
         SelfSignedCertificate cert = new SelfSignedCertificate();
         SslContext context = SslContext.newServerContext(
                 cert.certificate(), cert.privateKey());

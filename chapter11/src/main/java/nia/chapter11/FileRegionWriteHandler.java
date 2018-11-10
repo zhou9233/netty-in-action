@@ -21,8 +21,10 @@ public class FileRegionWriteHandler extends ChannelInboundHandlerAdapter {
         Channel channel = CHANNEL_FROM_SOMEWHERE; //get reference from somewhere
         //...
         FileInputStream in = new FileInputStream(file);
+        //以该文件的完整长度创建一个新的DefaultFileRegion
         FileRegion region = new DefaultFileRegion(
                 in.getChannel(), 0, file.length());
+        //发送该DefaultFileRegion,并注册一个ChannelFutureListener
         channel.writeAndFlush(region).addListener(
             new ChannelFutureListener() {
             @Override

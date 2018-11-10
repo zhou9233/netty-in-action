@@ -16,5 +16,6 @@ public class SimpleDiscardHandler
     public void channelRead0(ChannelHandlerContext ctx,
         Object msg) {
         // No need to do anything special
+        //SimpleChannelInboundHandler会自动释放资源
     }
 }

@@ -17,9 +17,9 @@ import java.net.InetSocketAddress;
  * @author <a href="mailto:norman.maurer@gmail.com">Norman Maurer</a>
  * @author <a href="mailto:mawolfthal@gmail.com">Marvin Wolfthal</a>
  */
-public class BootstrapClient {
+public class BootstrapClient2Shutdown {
     public static void main(String args[]) {
-        BootstrapClient client = new BootstrapClient();
+        BootstrapClient2Shutdown client = new BootstrapClient2Shutdown();
         client.bootstrap();
     }
 
@@ -51,7 +51,8 @@ public class BootstrapClient {
                 //连接到远程主机
                 bootstrap.connect(
                         new InetSocketAddress("127.0.0.1", 9000));
-        future.addListener(new ChannelFutureListener() {
+        future.syncUninterruptibly();
+        /*future.addListener(new ChannelFutureListener() {
             @Override
             public void operationComplete(ChannelFuture channelFuture)
                     throws Exception {
@@ -62,7 +63,7 @@ public class BootstrapClient {
                     channelFuture.cause().printStackTrace();
                 }
             }
-        });
+        });*/
         Future<?> future2 = group.shutdownGracefully();
         future2.syncUninterruptibly();
 

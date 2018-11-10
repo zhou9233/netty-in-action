@@ -1,6 +1,7 @@
 package nia.chapter8;
 
 import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -8,6 +9,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.oio.OioEventLoopGroup;
 import io.netty.channel.socket.DatagramPacket;
 import io.netty.channel.socket.oio.OioDatagramChannel;
+import io.netty.util.CharsetUtil;
 
 import java.net.InetSocketAddress;
 
@@ -17,11 +19,11 @@ import java.net.InetSocketAddress;
  * @author <a href="mailto:norman.maurer@gmail.com">Norman Maurer</a>
  * @author <a href="mailto:mawolfthal@gmail.com">Marvin Wolfthal</a>
  */
-public class BootstrapDatagramChannel {
+public class BootstrapDatagramChannel2 {
 
     public static void main(String[] args) {
-        BootstrapDatagramChannel bootstrapDatagramChannel = new
-                BootstrapDatagramChannel();
+        BootstrapDatagramChannel2 bootstrapDatagramChannel = new
+                BootstrapDatagramChannel2();
         bootstrapDatagramChannel.bootstrap();
     }
 
@@ -38,8 +40,12 @@ public class BootstrapDatagramChannel {
                 @Override
                 public void channelRead0(ChannelHandlerContext ctx,
                     DatagramPacket msg) throws Exception {
-                    System.out.println("receive msg");
-                    System.out.println(msg);
+                    // Do something with the packet
+                }
+                @Override
+                public void channelActive(ChannelHandlerContext ctx) {
+                    ctx.writeAndFlush(Unpooled.copiedBuffer("Netty rocks!",
+                            CharsetUtil.UTF_8));//当被通知Channel是活跃的时候，发送一条消息
                 }
             }
         );

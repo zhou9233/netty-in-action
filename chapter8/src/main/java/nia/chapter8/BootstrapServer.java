@@ -19,14 +19,22 @@ import java.net.InetSocketAddress;
  */
 public class BootstrapServer {
 
+    public static void main(String[] args) {
+        BootstrapServer bootstrapServer = new BootstrapServer();
+        bootstrapServer.bootstrap();
+    }
+
     /**
      * Listing 8.4 Bootstrapping a server
      * */
     public void bootstrap() {
         NioEventLoopGroup group = new NioEventLoopGroup();
         ServerBootstrap bootstrap = new ServerBootstrap();
+        //设置EventLoopGroup,其提供了用于处理Channel事件的EventLoop
         bootstrap.group(group)
+                //指定要使用的Channel实现
             .channel(NioServerSocketChannel.class)
+                //设置用于处理已被接受的子Channel的I/O及数据的ChannelInboundHandler
             .childHandler(new SimpleChannelInboundHandler<ByteBuf>() {
                 @Override
                 protected void channelRead0(ChannelHandlerContext channelHandlerContext,
@@ -34,7 +42,8 @@ public class BootstrapServer {
                     System.out.println("Received data");
                 }
             });
-        ChannelFuture future = bootstrap.bind(new InetSocketAddress(8080));
+        //通过配置好的ServerBootstrap的实例绑定该Channel
+        ChannelFuture future = bootstrap.bind(new InetSocketAddress(9000));
         future.addListener(new ChannelFutureListener() {
             @Override
             public void operationComplete(ChannelFuture channelFuture)

@@ -25,10 +25,12 @@ public class HttpCompressionInitializer extends ChannelInitializer<Channel> {
         ChannelPipeline pipeline = ch.pipeline();
         if (isClient) {
             pipeline.addLast("codec", new HttpClientCodec());
+            //如果是客户端，则添加HttpContentDecompressor以处理来自服务器的压缩内容
             pipeline.addLast("decompressor",
             new HttpContentDecompressor());
         } else {
             pipeline.addLast("codec", new HttpServerCodec());
+            //如果是服务器，则添加HttpContentCompressor来压缩数据（如果客户端支持它）
             pipeline.addLast("compressor",
             new HttpContentCompressor());
         }

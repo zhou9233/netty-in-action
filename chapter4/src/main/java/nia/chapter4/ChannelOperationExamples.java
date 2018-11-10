@@ -5,6 +5,8 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.epoll.EpollServerSocketChannel;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.CharsetUtil;
 
@@ -54,10 +56,8 @@ public class ChannelOperationExamples {
             }
         };
         Executor executor = Executors.newCachedThreadPool();
-
         // write in one thread
         executor.execute(writer);
-
         // write in another thread
         executor.execute(writer);
         //...

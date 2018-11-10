@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class FrameChunkDecoder extends ByteToMessageDecoder {
     private final int maxFrameSize;
-
+    //指定将要产生的帧的最大允许大小
     public FrameChunkDecoder(int maxFrameSize) {
         this.maxFrameSize = maxFrameSize;
     }
@@ -24,6 +24,7 @@ public class FrameChunkDecoder extends ByteToMessageDecoder {
         List<Object> out)
         throws Exception {
         int readableBytes = in.readableBytes();
+        //如果该帧太大，则会丢弃并抛出一个TooLongFrameException
         if (readableBytes > maxFrameSize) {
             // discard the bytes
             in.clear();

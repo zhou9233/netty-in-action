@@ -26,6 +26,7 @@ public class FrameChunkDecoderTest {
         ByteBuf input = buf.duplicate();
 
         EmbeddedChannel channel = new EmbeddedChannel(
+                //设置最大3字节
             new FrameChunkDecoder(3));
 
         assertTrue(channel.writeInbound(input.readBytes(2)));
@@ -33,7 +34,7 @@ public class FrameChunkDecoderTest {
             channel.writeInbound(input.readBytes(4));
             Assert.fail();
         } catch (TooLongFrameException e) {
-            // expected exception
+            e.printStackTrace();
         }
         assertTrue(channel.writeInbound(input.readBytes(3)));
         assertTrue(channel.finish());
